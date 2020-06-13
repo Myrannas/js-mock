@@ -8,7 +8,7 @@ interface MockedObject {
     call(): MockedObject;
 }
 
-describe('Mock', () => {
+describe('Recording Mode', () => {
     it('should allow you to provide values for fields', () => {
         const obj = mock<MockedObject>();
 
@@ -19,16 +19,17 @@ describe('Mock', () => {
 
     it('should allow you to provide values for nested fields', () => {
         const obj = mock<MockedObject>();
-
-        obj.field2.field = 'test2';
+        when(obj.field2.field).thenReturn('test2');
 
         expect(obj.field2.field).toEqual('test2');
     });
 
     it('should allow you to override methods', () => {
-        // const obj = mock<MockedObject>();
+        const obj = mock<MockedObject>();
 
-        // when(obj.call().field).thenReturn();
+        when(obj.call().field).thenReturn('test');
+
+        expect(obj.call().field).toEqual('test');
     })
 
     it('should allow you to override deep values for methods', () => {
